@@ -21,42 +21,50 @@ const Content = styled.div`
 `
 
 const GatsbyLink = styled.a`
+  color: ${(p) => (p.isRoot ? "white" : "black")};
   margin-left: 5px;
 `
 
 const Footer = styled.footer`
+  color: ${(p) => (p.isRoot ? "white" : "black")};
   display: flex;
   justify-content: center;
 `
 
-const Layout = ({ children }) => (
-  <StaticQuery
-    query={graphql`
-      query SiteTitleQuery {
-        site {
-          siteMetadata {
-            title
+const Layout = ({ children, path }) => {
+  const isRoot =
+    typeof window !== "undefined" && window.location.pathname === "/"
+  return (
+    <StaticQuery
+      query={graphql`
+        query SiteTitleQuery {
+          site {
+            siteMetadata {
+              title
+            }
           }
         }
-      }
-    `}
-    render={data => (
-      <>
-        <Header siteTitle={data.site.siteMetadata.title} />
-        <Content>
-          <main>{children}</main>
-          <Footer>
-            <p>
-            © {new Date().getFullYear()}, Built with
-            {` `}
-            </p>
-            <GatsbyLink href="https://www.gatsbyjs.org">Gatsby</GatsbyLink>
-          </Footer>
-        </Content>
-      </>
-    )}
-  />
-)
+      `}
+      render={(data) => (
+        <>
+          <Header siteTitle={data.site.siteMetadata.title} />
+          <Content>
+            <main>{children}</main>
+            <Footer isRoot={isRoot}>
+              <p>
+                © {new Date().getFullYear()}, Built with
+                {` `}
+              </p>
+              <GatsbyLink isRoot={isRoot} href="https://www.gatsbyjs.org">
+                Gatsby
+              </GatsbyLink>
+            </Footer>
+          </Content>
+        </>
+      )}
+    />
+  )
+}
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,

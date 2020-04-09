@@ -8,6 +8,7 @@ const Container = styled.div`
 `
 
 const OuterContainer = styled.div`
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,7 +39,7 @@ const LandingBio = () => (
         }
       }
     `}
-    render={data => (
+    render={(data) => (
       <OuterContainer>
         <Container>
           <NameHeader>{data.site.siteMetadata.title}</NameHeader>

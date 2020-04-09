@@ -1,9 +1,10 @@
 import React from "react"
 import { graphql } from "gatsby"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 import styled from "@emotion/styled"
+
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-
 const Content = styled.div`
   margin: 0 auto;
   max-width: 860px;
@@ -27,7 +28,7 @@ const HeaderDate = styled.h3`
 `
 
 // STYLE THE TAGS INSIDE THE MARKDOWN HERE
-const MarkdownContent = styled.div`
+const MarkdownContent = styled(MDXRenderer)`
   a {
     text-decoration: none;
     position: relative;
@@ -47,7 +48,7 @@ const MarkdownContent = styled.div`
 `
 
 export default ({ data }) => {
-  const post = data.markdownRemark
+  const post = data.mdx
   return (
     <Layout>
       <SEO
@@ -59,21 +60,20 @@ export default ({ data }) => {
         <HeaderDate>
           {post.frontmatter.date} - {post.fields.readingTime.text}
         </HeaderDate>
-        <MarkdownContent dangerouslySetInnerHTML={{ __html: post.html }} />
+        <MarkdownContent>{post.body}</MarkdownContent>
       </Content>
     </Layout>
   )
 }
 
 export const pageQuery = graphql`
-  query($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
-      html
+  query($id: String!) {
+    mdx(id: { eq: $id }) {
+      body
       excerpt(pruneLength: 160)
       frontmatter {
-        date(formatString: "DD MMMM, YYYY")
-        path
         title
+        date(formatString: "MMMM Do, YYYY")
       }
       fields {
         readingTime {

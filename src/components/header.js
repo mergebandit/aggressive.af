@@ -10,7 +10,7 @@ const Content = styled.div`
 `
 
 const NavLink = styled(Link)`
-  color: black;
+  color: ${(p) => (p.isRoot ? "white" : "black")};
   margin-left: 15px;
   text-decoration: none;
   display: inline-block;
@@ -36,7 +36,7 @@ const NavLink = styled(Link)`
 `
 
 const GitHubLink = styled.a`
-  color: black;
+  color: ${(p) => (p.isRoot ? "white" : "black")};
   margin-left: 15px;
   text-decoration: none;
   display: inline-block;
@@ -72,19 +72,30 @@ const SiteHeader = styled.header`
   justify-content: center;
 `
 
-const Header = ({ siteTitle }) => (
-  <SiteHeader>
-    <Content>
-      <p>
-        <HomeLink to="/">{siteTitle}</HomeLink>
-        <NavLink to="/blog">Blog</NavLink>
-        <GitHubLink href="https://github.com/niklasmtj/gatsby-starter-julia">
-          GitHub
-        </GitHubLink>
-      </p>
-    </Content>
-  </SiteHeader>
-)
+const Header = ({ siteTitle }) => {
+  const isRoot =
+    typeof window !== "undefined" && window.location.pathname === "/"
+  return (
+    <SiteHeader>
+      <Content>
+        <p>
+          <HomeLink isRoot={isRoot} to="/">
+            {siteTitle}
+          </HomeLink>
+          <NavLink isRoot={isRoot} to="/blog">
+            Blog
+          </NavLink>
+          <GitHubLink
+            isRoot={isRoot}
+            href="https://github.com/mergebandit/aggressive.af"
+          >
+            GitHub
+          </GitHubLink>
+        </p>
+      </Content>
+    </SiteHeader>
+  )
+}
 
 Header.propTypes = {
   siteTitle: PropTypes.string,

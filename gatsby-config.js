@@ -1,16 +1,16 @@
 module.exports = {
   siteMetadata: {
-    title: `Julia Doe`,
-    subtitle: `software developer`,
-    description: `A minimal blog starter built with Gatsbyjs. The needed Gatsby files are included.`,
-    author: `@niklasmtj`,
+    title: `Scott Silvi`,
+    subtitle: `Aggressively learning in public.`,
+    description: `A blog mostly about technology. Maybe beards.`,
+    author: `@scottsilvi`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `markdown-pages`,
+        name: `blog`,
         path: `${__dirname}/src/content`,
       },
     },
@@ -24,25 +24,42 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-emotion`,
+    `gatsby-remark-reading-time`,
+    `gatsby-remark-images`,
     {
-      resolve: `gatsby-transformer-remark`,
+      resolve: "gatsby-plugin-page-creator",
       options: {
-        plugins: [`gatsby-remark-reading-time`, {
-          resolve: `gatsby-remark-prismjs`,
-          options: {
-            aliases:{sh: "bash", js:"javascript"},
-            showLineNumbers: true,
-          }
-        }],
+        path: `${__dirname}/src/content`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [".mdx", ".md"],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 1035,
+              sizeByPixelDensity: true,
+            },
+          },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              classPrefix: "language-",
+              inlineCodeMarker: null,
+              aliases: {},
+            },
+          },
+        ],
       },
     },
     {
       resolve: `gatsby-plugin-netlify`,
       options: {
         headers: {
-          "/*": [
-            "Strict-Transport-Security: max-age=63072000"
-          ]
+          "/*": ["Strict-Transport-Security: max-age=63072000"],
         }, // option to add more headers. `Link` headers are transformed by the below criteria
         allPageHeaders: [], // option to add headers for all pages. `Link` headers are transformed by the below criteria
         mergeSecurityHeaders: true, // boolean to turn off the default security headers

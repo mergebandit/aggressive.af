@@ -39,7 +39,7 @@ const IndexPage = ({ data }) => {
       <SEO title="Blog" />
       <Content>
         <h1>Blog</h1>
-        {data.allMarkdownRemark.edges
+        {data.allMdx.edges
           .filter(({ node }) => {
             const rawDate = node.frontmatter.rawDate
             const date = new Date(rawDate)
@@ -77,7 +77,7 @@ export const query = graphql`
         title
       }
     }
-    allMarkdownRemark(
+    allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
       filter: { frontmatter: { draft: { eq: false } } }
     ) {
