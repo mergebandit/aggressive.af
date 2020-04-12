@@ -1,5 +1,6 @@
 import { Link } from "gatsby"
 import styled from "@emotion/styled"
+import { Location } from "@reach/router"
 import PropTypes from "prop-types"
 import React from "react"
 
@@ -7,10 +8,16 @@ const Content = styled.div`
   max-width: 860px;
   padding: 1rem 1.0875rem;
   font-size: 1.2rem;
+
+  ${(p) =>
+    p.isRoot
+      ? `a {
+    color: #fff;
+  }`
+      : ``}
 `
 
 const NavLink = styled(Link)`
-  color: ${(p) => (p.isRoot ? "white" : "black")};
   margin-left: 15px;
   text-decoration: none;
   display: inline-block;
@@ -36,7 +43,6 @@ const NavLink = styled(Link)`
 `
 
 const GitHubLink = styled.a`
-  color: ${(p) => (p.isRoot ? "white" : "black")};
   margin-left: 15px;
   text-decoration: none;
   display: inline-block;
@@ -72,28 +78,26 @@ const SiteHeader = styled.header`
   justify-content: center;
 `
 
-const Header = ({ siteTitle }) => {
-  const isRoot =
-    typeof window !== "undefined" && window.location.pathname === "/"
+const Header = ({ siteTitle, ...rest }) => {
   return (
-    <SiteHeader>
-      <Content>
-        <p>
-          <HomeLink isRoot={isRoot} to="/">
-            {siteTitle}
-          </HomeLink>
-          <NavLink isRoot={isRoot} to="/blog">
-            Blog
-          </NavLink>
-          <GitHubLink
-            isRoot={isRoot}
-            href="https://github.com/mergebandit/aggressive.af"
-          >
-            GitHub
-          </GitHubLink>
-        </p>
-      </Content>
-    </SiteHeader>
+    <Location>
+      {({ location }) => {
+        const isRoot = location.pathname === "/" || location.pathname === "/*"
+        return (
+          <SiteHeader>
+            <Content isRoot={isRoot}>
+              <p>
+                <HomeLink to="/">{siteTitle}</HomeLink>
+                <NavLink to="/blog">Blog</NavLink>
+                <GitHubLink href="https://github.com/mergebandit/aggressive.af">
+                  GitHub
+                </GitHubLink>
+              </p>
+            </Content>
+          </SiteHeader>
+        )
+      }}
+    </Location>
   )
 }
 

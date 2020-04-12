@@ -9,6 +9,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
 import styled from "@emotion/styled"
+import { Location } from "@reach/router"
 
 import Header from "./header"
 import "./layout.css"
@@ -21,48 +22,62 @@ const Content = styled.div`
 `
 
 const GatsbyLink = styled.a`
-  color: ${(p) => (p.isRoot ? "white" : "black")};
   margin-left: 5px;
 `
 
 const Footer = styled.footer`
-  color: ${(p) => (p.isRoot ? "white" : "black")};
   display: flex;
   justify-content: center;
+
+  ${(p) =>
+    p.isRoot
+      ? `
+    color: #fff;
+    a {
+      color: #fff;
+    }
+  `
+      : ``}
 `
 
 const Layout = ({ children, path }) => {
-  const isRoot =
-    typeof window !== "undefined" && window.location.pathname === "/"
   return (
-    <StaticQuery
-      query={graphql`
-        query SiteTitleQuery {
-          site {
-            siteMetadata {
-              title
+    <Location>
+      {({ location }) => (
+        <StaticQuery
+          query={graphql`
+            query SiteTitleQuery {
+              site {
+                siteMetadata {
+                  title
+                }
+              }
             }
-          }
-        }
-      `}
-      render={(data) => (
-        <>
-          <Header siteTitle={data.site.siteMetadata.title} />
-          <Content>
-            <main>{children}</main>
-            <Footer isRoot={isRoot}>
-              <p>
-                © {new Date().getFullYear()}, Built with
-                {` `}
-              </p>
-              <GatsbyLink isRoot={isRoot} href="https://www.gatsbyjs.org">
-                Gatsby
-              </GatsbyLink>
-            </Footer>
-          </Content>
-        </>
+          `}
+          render={(data) => (
+            <>
+              <Header siteTitle={data.site.siteMetadata.title} />
+              <Content>
+                <main>{children}</main>
+                <Footer
+                  isRoot={
+                    location.pathname === "/" || location.pathname === "/*"
+                  }
+                >
+                  <p>
+                    © {new Date().getFullYear()}, Built with
+                    {` `}
+                  </p>
+                  <GatsbyLink href="https://www.gatsbyjs.org">
+                    Gatsby
+                  </GatsbyLink>
+                </Footer>
+              </Content>
+            </>
+          )}
+        />
       )}
-    />
+    </Location>
   )
 }
 
