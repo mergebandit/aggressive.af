@@ -1,7 +1,9 @@
 import React from "react"
 import { graphql } from "gatsby"
+import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import styled from "@emotion/styled"
+import get from "lodash/get"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -47,20 +49,43 @@ const MarkdownContent = styled(MDXRenderer)`
   }
 `
 
+const ImgWrapper = styled.div`
+  text-align: center;
+  p {
+    margin-bottom: 0;
+  }
+`
+
 export default ({ data }) => {
-  const post = data.mdx
+  const { mdx } = data
+  const { body, excerpt, fields, frontmatter } = mdx
+  const { description, title } = frontmatter
+  const { banner, bannerCredit, keywords } = fields
+
   return (
     <Layout>
       <SEO
-        title={post.frontmatter.title}
-        description={post.frontmatter.description || post.excerpt}
+        title={title}
+        metaImage={get(banner, "childImageSharp.fluid.src")}
+        description={description || excerpt}
       />
       <Content>
-        <MarkedHeader>{post.frontmatter.title}</MarkedHeader>
+        <MarkedHeader>{title}</MarkedHeader>
+        {banner && (
+          <ImgWrapper>
+            <Img
+              fluid={banner.childImageSharp.fluid}
+              alt={keywords.join(", ")}
+            />
+            {bannerCredit ? (
+              <MarkdownContent>{bannerCredit}</MarkdownContent>
+            ) : null}
+          </ImgWrapper>
+        )}
         <HeaderDate>
-          {post.frontmatter.date} - {post.fields.readingTime.text}
+          {frontmatter.date} - {fields.readingTime.text}
         </HeaderDate>
-        <MarkdownContent>{post.body}</MarkdownContent>
+        <MarkdownContent>{body}</MarkdownContent>
       </Content>
     </Layout>
   )
@@ -76,6 +101,10 @@ export const pageQuery = graphql`
         date(formatString: "MMMM Do, YYYY")
       }
       fields {
+        banner {
+          ...bannerImage260
+        }
+        keywords
         readingTime {
           text
         }

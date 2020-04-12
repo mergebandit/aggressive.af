@@ -27,6 +27,18 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: `slug`,
       value: slug,
     })
+
+    createNodeField({
+      name: "keywords",
+      node,
+      value: node.frontmatter.keywords || [],
+    })
+
+    createNodeField({
+      name: "banner",
+      node,
+      value: node.frontmatter.banner,
+    })
   }
 }
 

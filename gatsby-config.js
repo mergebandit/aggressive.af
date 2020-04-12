@@ -1,5 +1,6 @@
 module.exports = {
   siteMetadata: {
+    keywords: ["Scott Silvi, JavaScript"],
     title: `Scott Silvi`,
     subtitle: `Aggressively learning in public.`,
     description: `A blog mostly about technology. Maybe beards.`,

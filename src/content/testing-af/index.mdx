@@ -4,11 +4,36 @@ slug: "aha-testing"
 title: "AHA Testing 💡"
 draft: false
 date: "2019-04-07"
+banner: "./images/banner.jpg"
+keywords:
+  - Public Speaking
 ---
 
-The [AHA Programming Principle](/blog/aha-programming) stands for "Avoid Hasty
-Abstraction." I have specific feelings about how this applies to writing
-maintainable tests. Most of the tests that I've seen in the wild have been
-wildly on one side of the spectrum of abstraction: ANA (Absolutely No
-Abstraction), or completely DRY (Don't Repeat Yourself). (I made up ANA just
-now).
+Today, I purchased the [TestingJavascript.com](https://testingjavascript.com/)
+course from Kent C. Dodds. While I've done a fair amount of testing in my
+career, I've heard tremendous things about the course on the twitters. What
+follows is a stream-of-consciousness as I'm going through the course.
+
+### Fundamentals of Testing in JavaScript
+
+I once contributed (errata while it was a WIP) to an incredibly ambitious effort
+by [Tero Parviainen](https://teropa.info/) called
+[Build Your Own AngularJS](https://github.com/teropa/build-your-own-angularjs).
+In that effort, you start with `file > new` on `scope.js` and build the entire
+AngularJS (1.x) framework.
+
+During that effort, I transitioned my mental model from:
+
+> I know how to write idomatic AngularJS
+
+to:
+
+> I know _why_ all this works, and can now choose the _best_ approach (as
+> opposed to the first one I can get to work)
+
+All of that to say ... I'm certain I could have written the naive `expect`
+implementation in this module, the fact remains _I had never done so_. Simply
+going through this exercise reinforces my current mental model on how assertion
+libraries work.
+
+###
