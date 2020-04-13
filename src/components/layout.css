@@ -631,3 +631,8 @@ a::selection {
     font-size: 100%;
   }
 }
+
+blockquote {
+  border-left: 3px solid rebeccapurple;
+  padding-left: 0.7rem;
+}

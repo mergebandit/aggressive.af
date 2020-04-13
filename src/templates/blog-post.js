@@ -4,6 +4,7 @@ import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import styled from "@emotion/styled"
 import get from "lodash/get"
+import Markdown from "react-markdown"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -15,13 +16,6 @@ const Content = styled.div`
 
 const MarkedHeader = styled.h1`
   display: inline;
-  border-radius: 1em 0 1em 0;
-  background-image: linear-gradient(
-    -100deg,
-    rgba(255, 250, 150, 0.15),
-    rgba(255, 250, 150, 0.8) 100%,
-    rgba(255, 250, 150, 0.25)
-  );
 `
 
 const HeaderDate = styled.h3`
@@ -50,18 +44,29 @@ const MarkdownContent = styled(MDXRenderer)`
 `
 
 const ImgWrapper = styled.div`
+  margin-bottom: 40px;
   text-align: center;
   p {
     margin-bottom: 0;
   }
 `
+const Next = styled.a`
+  margin-left: auto;
+`
+
+const ActionButtons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`
 
 export default ({ data }) => {
   const { mdx } = data
   const { body, excerpt, fields, frontmatter } = mdx
-  const { description, title } = frontmatter
+  const { description, title, prev, next } = frontmatter
   const { banner, bannerCredit, keywords } = fields
 
+  console.log("frontmatter", frontmatter)
   return (
     <Layout>
       <SEO
@@ -71,21 +76,25 @@ export default ({ data }) => {
       />
       <Content>
         <MarkedHeader>{title}</MarkedHeader>
+        <HeaderDate>
+          {frontmatter.date} - {fields.readingTime.text}
+        </HeaderDate>
         {banner && (
           <ImgWrapper>
             <Img
               fluid={banner.childImageSharp.fluid}
               alt={keywords.join(", ")}
             />
-            {bannerCredit ? (
-              <MarkdownContent>{bannerCredit}</MarkdownContent>
-            ) : null}
+            {bannerCredit ? <Markdown>{bannerCredit}</Markdown> : null}
           </ImgWrapper>
         )}
-        <HeaderDate>
-          {frontmatter.date} - {fields.readingTime.text}
-        </HeaderDate>
         <MarkdownContent>{body}</MarkdownContent>
+        {(next || prev) && (
+          <ActionButtons>
+            {prev && <a href={prev}>{`<`} Prev</a>}
+            {next && <Next href={next}>Next {`>`}</Next>}
+          </ActionButtons>
+        )}
       </Content>
     </Layout>
   )
@@ -98,12 +107,15 @@ export const pageQuery = graphql`
       excerpt(pruneLength: 160)
       frontmatter {
         title
+        next
+        prev
         date(formatString: "MMMM Do, YYYY")
       }
       fields {
         banner {
-          ...bannerImage260
+          ...bannerImage720
         }
+        bannerCredit
         keywords
         readingTime {
           text

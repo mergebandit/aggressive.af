@@ -22,6 +22,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   if (node.internal.type === `Mdx`) {
     const slug = createFilePath({ node, getNode, basePath: `pages` })
 
+    console.log("frontmatter", node.frontmatter)
     createNodeField({
       node,
       name: `slug`,
@@ -38,6 +39,12 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: "banner",
       node,
       value: node.frontmatter.banner,
+    })
+
+    createNodeField({
+      name: "bannerCredit",
+      node,
+      value: node.frontmatter.bannerCredit,
     })
   }
 }
