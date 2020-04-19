@@ -63,21 +63,28 @@ const ActionButtons = styled.div`
 export default ({ data }) => {
   const { mdx } = data
   const { body, excerpt, fields, frontmatter } = mdx
-  const { description, title, prev, next } = frontmatter
-  const { banner, bannerCredit, keywords } = fields
+  const { date, description, title, prev, next, unsplashId } = frontmatter
+  const { banner, bannerCredit, keywords, readingTime } = fields
 
   console.log("frontmatter", frontmatter)
+  const ogImage = {
+    date,
+    readingTime: readingTime.text,
+    title,
+    unsplashId,
+  }
   return (
     <Layout>
       <SEO
         title={title}
         metaImage={get(banner, "childImageSharp.fluid.src")}
+        ogImage={ogImage}
         description={description || excerpt}
       />
       <Content>
         <MarkedHeader>{title}</MarkedHeader>
         <HeaderDate>
-          {frontmatter.date} - {fields.readingTime.text}
+          {frontmatter.date} - {readingTime.text}
         </HeaderDate>
         {banner && (
           <ImgWrapper>
@@ -108,6 +115,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
         next
+        unsplashId
         prev
         date(formatString: "MMMM Do, YYYY")
       }
