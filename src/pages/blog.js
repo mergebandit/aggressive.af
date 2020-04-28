@@ -28,18 +28,31 @@ const MarkerHeader = styled.h3`
   );
 `
 
+const MarkerTag = styled.span`
+  background-color: rebeccapurple;
+  color: white;
+  border-radius: 8px;
+  padding: 4px 8px;
+  margin-left: 16px;
+`
+
 const ReadingTime = styled.h5`
   display: inline;
   color: #606060;
 `
 
 const IndexPage = ({ data }) => {
+  const results = data.allMdx.edges.filter(
+    ({ node }) =>
+      process.env.NODE_ENV === "development" || !node.frontmatter.draft
+  )
+
   return (
     <Layout>
       <SEO title="Blog" />
       <Content>
         <h1>Blog</h1>
-        {data.allMdx.edges
+        {results
           .filter(({ node }) => {
             const rawDate = node.frontmatter.rawDate
             const date = new Date(rawDate)
@@ -54,7 +67,8 @@ const IndexPage = ({ data }) => {
                   color: inherit;
                 `}
               >
-                <MarkerHeader>{node.frontmatter.title} </MarkerHeader>
+                <MarkerHeader>{node.frontmatter.title}</MarkerHeader>
+                {node.frontmatter.draft && <MarkerTag>draft</MarkerTag>}
                 <div>
                   <ArticleDate>{node.frontmatter.date}</ArticleDate>
                   <ReadingTime> - {node.fields.readingTime.text}</ReadingTime>
@@ -77,15 +91,13 @@ export const query = graphql`
         title
       }
     }
-    allMdx(
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { draft: { eq: false } } }
-    ) {
+    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
       totalCount
       edges {
         node {
           id
           frontmatter {
+            draft
             title
             date(formatString: "DD MMMM, YYYY")
             rawDate: date
