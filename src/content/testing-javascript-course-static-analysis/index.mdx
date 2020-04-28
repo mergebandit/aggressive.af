@@ -1,0 +1,64 @@
+---
+path: /blog/testing-javascript-course-static-analysis
+title: Static Analysis Testing
+slug: testing-javascript-course-static-analysis
+draft: true
+date: 2020-04-10
+tech: testing
+description: >-
+  _Static Analysis Testing JavaScript Applications - module 2 of Kent C. Dodds'
+  testingjavascript.com course_
+keywords:
+  - testing
+  - react
+  - javascript
+banner: ./images/banner.jpg
+unsplashId: d9ILr-dbEdg
+prev: /blog/testing-javascript-course-fundamentals
+next: /blog/testing-javascript-course-fundamentals
+bannerCredit: Photo by [Agence Olloweb](https://unsplash.com/photos/d9ILr-dbEdg)
+---
+
+_This is part 2 of an [8-part series](/blog/testing-javascript-course)
+highlighting my takeaways from each of the modules on Kent C. Dodds' excellent
+[TestingJavascript.com](https://testingjavascript.com/) course._
+
+The purpose of this series is to I always appreciate seeing posts on Twitter
+about other Sr Engineers who made a "simple" mistake that cost them a bunch of
+time. As part of my objective to
+[learn in public](https://www.swyx.io/writing/learn-in-public/), the purpose of
+this series is to demonstrate how even at the Principle Engineer level, there
+are always things to learn -- even about tooling that I use every day.
+
+## Part 2: Static Analysis Testing JavaScript Applications
+
+> This module introduces us to a variety of tools that analyze our code to help
+> identify bugs
+
+### Takeaways
+
+This is the first time I've built an `.eslintrc` file from scratch in ... quite
+awhile. I typically pull them from other projects, or use a tool like
+[kcd-scripts](https://github.com/kentcdodds/kcd-scripts) or
+[dotfiles](https://github.com/mathiasbynens/dotfiles). Some of the highlights
+from this module:
+
+1. [Babel](https://babeljs.io/) is the tool in my toolchain that includes
+   `use strict` in all my modules
+2. The VSCode Eslint plugin has a shortcut (`Cmd + .`) to:
+
+- Fix problems
+- Disable rule for this line / file
+- Open documentation for this rule
+
+3. Instead of duplicating `.gitignore`, `.eslintignore`, `.prettierignore` etc,
+   I can simply use the `--ignore-path .gitignore` flag
+4. I wasn't aware that the [Prettier Playground](https://prettier.io/playground)
+   existed
+
+### Real World Use Cases
+
+I am working on a project right now that was using
+[tslint](https://github.com/palantir/tslint). As `tslint` is now deprecated (in
+favor of [eslint](https://eslint.org/)), I set up an entire end-to-end workflow
+for typescript in eslint.

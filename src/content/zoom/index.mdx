@@ -1,0 +1,81 @@
+---
+path: /blog/to-do
+title: Ideas on things to write about
+slug: testing-javascript-course-static-analysis
+draft: true
+date: 2020-04-10
+tech: testing
+description: >-
+  _Todo yo_
+keywords:
+  - testing
+  - react
+  - javascript
+---
+
+# Zoom to MediaLive
+
+This document will serve as living documentation for wiring up Zoom to AWS
+MediaLive.
+
+## Zoom Configuration
+
+As described in this
+[Zoom KB Article](https://support.zoom.us/hc/en-us/articles/115001777826-Live-Streaming-Meetings-or-Webinars-Using-a-Custom-Service),
+the configuration of zoom is very straight forward. You simply have to configure
+a custom live streaming service, which ostensibly just points to a MediaLive
+channel url?
+
+## MediaLive
+
+Simply put, AWS Elemental Media Live is a live streaming workflow that involves
+three systems:
+
+1. A MediaLive `channel` which ingests and transcodes source content
+2. One or more `upstream systems` that provide the `source content` (e.g. video)
+   to MediaLive -- in our case, this is Zoom's configured LiveStream
+3. One or more `downstream systems` that are the destination for the output that
+   MediaLive produces
+
+> A typical downstream system consists of an origin service or a packager that
+> is connected to MediaLive, a content distribution network (CDN) that is
+> downstream of the origin service or the packager, and a playback device or
+> website where the users view the content. AWS Elemental MediaPackage is an
+> example of an origin service and packager. Amazon CloudFront is an example of
+> a CDN.
+
+### Getting Started
+
+To create a MediaLive workflow, you:
+
+1. create one or more `inputs`. The `inputs` describe how `upstream systems` are
+   connected to `channels`
+2. create a MediaLive `channel` and attach the `inputs` to the channel.
+3. configure the `channel` to describe how MediaLive connects to the
+   `downstream systems`
+
+<img src="https://docs.aws.amazon.com/medialive/latest/ug/images/components-4main.png" />
+<small>
+  Image&nbspSource:&nbsphttps://docs.aws.amazon.com/medialive/latest/ug/images/components-4main.png
+</small>
+
+`HLS` stands for HTTP Live Streaming `RTP` stands for Real-time Transport
+Protocol
+
+## Things to note:
+
+Upstream System: will be a push (presumably) from zoom
+
+Downstream System SD or H.264 (HD)
+
+The AWS Elemental MediaLive console includes a feature that lets a user create a
+password parameter in the AWS Systems Manager Parameter Store. The AWS Systems
+Manager Parameter Store is used extensively in AWS Elemental MediaLive. I
+
+## Todo
+
+- [ ] What is the upstream format? HLS? TS?
+- [ ] Setting Up: IAM Permissions for AWS Elemental MediaLive for a Production
+      Environment
+
+# MediaPackage
