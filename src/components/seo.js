@@ -29,7 +29,9 @@ function SEO({ description, lang, meta, keywords, title, ogImage }) {
   let ogImageUrl = `https://ogi.sh/article?eyebrow=${site.siteMetadata.author}&title=${metaTitle}`
   if (ogImage) {
     const { date, readingTime, title: ogTitle, unsplashId } = ogImage
-    ogImageUrl = `https://ogi.sh/article?eyebrow=${date}&title=${ogTitle}&subtitle=${readingTime}&unsplashId=${unsplashId}`
+    ogImageUrl = encodeURI(
+      `https://ogi.sh/article?eyebrow=${date}&title=${ogTitle}&subtitle=${readingTime}&unsplashId=${unsplashId}`
+    )
   }
 
   return (
