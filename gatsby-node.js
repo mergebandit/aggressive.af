@@ -17,6 +17,14 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
+const onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      modules: [path.resolve(__dirname, "src"), "node_modules"],
+    },
+  })
+}
+
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
   if (node.internal.type === `Mdx`) {
@@ -75,7 +83,10 @@ exports.createPages = ({ graphql, actions }) => {
       return Promise.reject(result.errors)
     }
     result.data.allMdx.edges
-      .filter(({ node }) => !node.frontmatter.draft)
+      .filter(
+        ({ node }) =>
+          process.env.NODE_ENV === "development" || !node.frontmatter.draft
+      )
       .forEach(({ node }) => {
         createPage({
           path: node.frontmatter.path,

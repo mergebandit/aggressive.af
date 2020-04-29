@@ -66,7 +66,7 @@ export default ({ data }) => {
   const { date, description, title, prev, next, unsplashId } = frontmatter
   const { banner, bannerCredit, keywords, readingTime } = fields
 
-  // console.log("frontmatter", frontmatter)
+  console.log("frontmatter", frontmatter)
   const ogImage = {
     date,
     readingTime: readingTime.text,

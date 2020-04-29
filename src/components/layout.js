@@ -13,11 +13,12 @@ import { Global, css } from "@emotion/core"
 import { Location } from "@reach/router"
 import { MDXProvider } from "@mdx-js/react"
 
+import { Callout } from "./ui"
 import mdxComponents from "./mdx"
-
 import Header from "./header"
 import "./layout.css"
 
+const shortcodes = { Callout }
 const globalStyles = css`
   .highlight-line {
     background-color: rgba(201, 167, 255, 0.2);
@@ -82,6 +83,10 @@ const Footer = styled.footer`
 `
 
 const Layout = ({ children, path }) => {
+  const components = {
+    ...shortcodes,
+    ...mdxComponents,
+  }
   return (
     <Location>
       {({ location }) => (
@@ -100,7 +105,7 @@ const Layout = ({ children, path }) => {
               <Header siteTitle={data.site.siteMetadata.title} />
               <Global styles={globalStyles} />
               <Content>
-                <MDXProvider components={mdxComponents}>{children}</MDXProvider>
+                <MDXProvider components={components}>{children}</MDXProvider>
                 <Footer
                   isRoot={
                     location.pathname === "/" || location.pathname === "/*"

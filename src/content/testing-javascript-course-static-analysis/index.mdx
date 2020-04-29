@@ -2,7 +2,7 @@
 path: /blog/testing-javascript-course-static-analysis
 title: Static Analysis Testing
 slug: testing-javascript-course-static-analysis
-draft: true
+draft: false
 date: 2020-04-10
 tech: testing
 description: >-
@@ -19,13 +19,15 @@ next: /blog/testing-javascript-course-fundamentals
 bannerCredit: Photo by [Agence Olloweb](https://unsplash.com/photos/d9ILr-dbEdg)
 ---
 
-_This is part 2 of an [8-part series](/blog/testing-javascript-course)
-highlighting my takeaways from each of the modules on Kent C. Dodds' excellent
-[TestingJavascript.com](https://testingjavascript.com/) course._
+<Callout>
+  This is part 2 of an
+  <a href="/blog/testing-javascript-course">8-part series</a>
+  highlighting my takeaways from each of the modules on Kent C. Dodds' excellent
+  <a href="https://testingjavascript.com/">TestingJavascript.com</a> course.
+</Callout>
 
-The purpose of this series is to I always appreciate seeing posts on Twitter
-about other Sr Engineers who made a "simple" mistake that cost them a bunch of
-time. As part of my objective to
+I always appreciate seeing posts on Twitter about other Sr Engineers who made a
+"simple" mistake that cost them a bunch of time. As part of my objective to
 [learn in public](https://www.swyx.io/writing/learn-in-public/), the purpose of
 this series is to demonstrate how even at the Principle Engineer level, there
 are always things to learn -- even about tooling that I use every day.
@@ -55,10 +57,12 @@ from this module:
    I can simply use the `--ignore-path .gitignore` flag
 4. I wasn't aware that the [Prettier Playground](https://prettier.io/playground)
    existed
+5. ESLint overrides are 🔥🔥🔥
+6. Instead of inlining your `husky` config within your `package.json`, you can
+   extract it to a `.huskyrc` file instead. Same for `.lintstagedrc`
 
 ### Real World Use Cases
 
-I am working on a project right now that was using
-[tslint](https://github.com/palantir/tslint). As `tslint` is now deprecated (in
-favor of [eslint](https://eslint.org/)), I set up an entire end-to-end workflow
-for typescript in eslint.
+I recently published a blog post on
+[migrating from tslint to eslint](/blog/migrating-from-tslint-to-eslint) that
+leveraged a slew of goodies from this module.
