@@ -2,8 +2,8 @@
 path: /blog/testing-javascript-course-mocking-fundamentals
 title: Mocking Fundamentals
 slug: testing-javascript-course-mocking-fundamentals
-draft: true
-date: 2020-04-28
+draft: false
+date: 2020-04-12
 tech: testing
 description: >-
   _Mocking Fundamentals - Module 3 of Kent C. Dodds' testingjavascript.com
@@ -15,7 +15,6 @@ keywords:
 banner: ./images/banner.jpg
 unsplashId: 5NGIlTOZLaw
 prev: /blog/testing-javascript-course-static-analysis
-next: /blog/testing-javascript-course-fundamentals
 bannerCredit:
   Photo by [Suzanne D. Williams](https://unsplash.com/photos/5NGIlTOZLaw)
 ---
@@ -27,12 +26,6 @@ bannerCredit:
   <a href="https://testingjavascript.com/">TestingJavascript.com</a> course.
 </Callout>
 
-I always appreciate seeing posts on Twitter about other Sr Engineers who made a
-"simple" mistake that cost them a bunch of time. As part of my objective to
-[learn in public](https://www.swyx.io/writing/learn-in-public/), the purpose of
-this series is to demonstrate how even at the Principle Engineer level, there
-are always things to learn -- even about tooling that I use every day.
-
 ## Part 3: Mocking Fundamentals
 
 > This module introduces us to the concept of mocking modules - typically used
@@ -40,6 +33,22 @@ are always things to learn -- even about tooling that I use every day.
 
 ### Takeaways
 
+Similar to what I described in
+[part 1](/blog/testing-javascript-course-fundamentals), building some of the
+basic abstractions we use in everyday development is tremendously useful:
+
+https://twitter.com/1Marc/status/1251811695237967877
+
+In particular, I thought it was useful to incrementally transition from
+monkey-patching, through an implementation of spyOn, before ultimately arriving
+at inline & external mocking.
+
 ### Real World Use Cases
 
+I didn't see a lot of great real-world use-cases for actually mocking modules
+like this - since we have such mature libraries and abstractions for this
+already, but that does not diminish the usefulness of this exercise.
+
 ### Final Thoughts
+
+Onward!
